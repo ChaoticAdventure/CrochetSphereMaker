@@ -1,22 +1,17 @@
 //
 //  main.cpp
-//  Sphere Project
+//  Sphere Project 2.0
 //
-//  Created by Nathan Gottlieb on 2/27/25.
+//  Created by Nathan Gottlieb on 3/7/25.
 //
 using namespace std;
-#include <iomanip>
 #include <iostream>
 #include <string>
 
+
 int main() {
-    int stitchesAround, rowsIncrease, rowsAround, totalRows;
-    cout << "This program can print a crochet pattern for a sphere." << endl <<
-    "How many stitches around do you want the widest portion of your sphere to be? Please choose a number that is divisible by 6." << endl;
-    cin >> stitchesAround;
-    string stitchesAroundString = to_string(stitchesAround);
-    string colonSpace = ": ";
-    
+    int stitchesAround, rowsIncrease, rowsAround, totalRows, rowsDecrease, decreaseCounter, currentMaximum = 48;
+    char input;
     //increase strings
     string increase1 = "1: sc around (6)",
     increase2 = "2: inc around (12)",
@@ -26,8 +21,6 @@ int main() {
     increase6 = "6: 2 sc, 1 inc, [4 sc, 1 inc] x5, 2 sc (36)",
     increase7 = "7: [5 sc, 1 inc] around (42)",
     increase8 = "8: 3 sc, 1 inc, [6 sc, 1 inc] x5, 3 sc (48)";
-    //around string
-    string around = "sc around (" + stitchesAroundString + ")";
     //decrease strings
     string decrease0 = "Close and fasten off",
     decrease1 = "dec around (6)",
@@ -36,119 +29,86 @@ int main() {
     decrease4 = "[3 sc, 1 dec] around (24)",
     decrease5 = "2 sc, 1 dec, [4 sc, 1 dec] x5, 2 sc (30)",
     decrease6 = "[5 sc, 1 dec] around (36)",
-    decrease7 = "3 sc, 1 dec, [6 sc, 1 dec] x5, 3 sc (42)";
+    decrease7 = "3 sc, 1 dec, [6 sc, 1 dec] x5, 3 sc (42)",
+    colonSpace = ": ";
     
-
-    if(stitchesAround % 6 == 0) {
+    do {
+        cout << "This program can print a crochet pattern for a sphere." << endl << "How many stitches around do you want the widest portion of your sphere to be? Please choose a number that is divisible by 6." << endl;
+        
+        cin >> stitchesAround;
+        while (stitchesAround % 6 != 0 || stitchesAround <= 6 || stitchesAround > currentMaximum) {
+            if (stitchesAround <= 6)
+                cout << "Sorry, your sphere would be too small. Please choose a larger number." << endl;
+            else if (stitchesAround > currentMaximum)
+                cout << "Sorry, your sphere is too large. Please choose a number equal to " << currentMaximum << " or smaller." << endl;
+            else if (stitchesAround % 6 != 0)
+                cout << "Please choose a number that is divisible by 6." << endl;
+            
+            cin >> stitchesAround;
+        }
+        string stitchesAroundString = to_string(stitchesAround);
+        string around = "sc around (" + stitchesAroundString + ")";
+        rowsIncrease = stitchesAround / 6;
+        
         rowsIncrease = stitchesAround / 6;
         rowsAround = rowsIncrease + 1;
         totalRows = (rowsIncrease * 2) + rowsAround - 1;
-        cout << "Total amount of rows: " << totalRows << endl;
-        cout << "Amount of increase rows: " << rowsIncrease << endl;
-        cout << "Amount of rows around: " << rowsAround << endl;
-        cout << "Amount of decrease rows: " << rowsIncrease - 1 << endl;
-        cout << " " << endl;
+        rowsDecrease = rowsIncrease - 1;
+        decreaseCounter = 1;
+        cout << endl << "Total amount of rows: " << totalRows << endl <<
+        "Amount of increase rows: " << rowsIncrease << endl <<
+        "Amount of rows around: " << rowsAround << endl <<
+        "Amount of decrease rows: " << rowsDecrease << endl << endl;
         
+        cout << increase1 << endl;
+        if (rowsIncrease >= 2)
+            cout << increase2 << endl;
+        if (rowsIncrease >= 3)
+            cout << increase3 << endl;
+        if (rowsIncrease >= 4)
+            cout << increase4 << endl;
+        if (rowsIncrease >= 5)
+            cout << increase5 << endl;
+        if (rowsIncrease >= 6)
+            cout << increase6 << endl;
+        if (rowsIncrease >= 7)
+            cout << increase7 << endl;
+        if (rowsIncrease >= 8)
+            cout << increase8 << endl;
         
-        switch(rowsIncrease) {
-            case 1:
-                cout << "It's not a great idea to make a sphere with only six stitches. Try a larger number." << endl;
-                break;
-            case 2:
-                cout << increase1 << endl <<
-                increase2 << endl <<
-                "3-5: " << around << endl <<
-                totalRows << colonSpace << decrease1 << endl <<
-                decrease0 << endl;
-                break;
-            case 3:
-                cout << increase1 << endl <<
-                increase2 << endl <<
-                increase3 << endl <<
-                "4-7: " << around << endl <<
-                totalRows - 1 << colonSpace << decrease2 << endl <<
-                totalRows << colonSpace << decrease1 << endl <<
-                decrease0 << endl;
-                break;
-            case 4:
-                cout << increase1 << endl <<
-                increase2 << endl <<
-                increase3 << endl <<
-                increase4 << endl <<
-                "5-9: " << around << endl <<
-                totalRows - 2 << colonSpace << decrease3 << endl <<
-                totalRows - 1 << colonSpace << decrease2 << endl <<
-                totalRows << colonSpace << decrease1 << endl <<
-                decrease0 << endl;
-                break;
-            case 5:
-                cout << increase1 << endl <<
-                increase2 << endl <<
-                increase3 << endl <<
-                increase4 << endl <<
-                increase5 << endl <<
-                "6-11: " << around << endl <<
-                totalRows - 3 << colonSpace << decrease4 << endl <<
-                totalRows - 2 << colonSpace << decrease3 << endl <<
-                totalRows - 1 << colonSpace << decrease2 << endl <<
-                totalRows << colonSpace << decrease1 << endl <<
-                decrease0 << endl;
-                break;
-            case 6:
-                cout << increase1 << endl <<
-                increase2 << endl <<
-                increase3 << endl <<
-                increase4 << endl <<
-                increase5 << endl <<
-                increase6 << endl <<
-                "7-13: " << around << endl <<
-                totalRows - 4 << colonSpace << decrease5 << endl <<
-                totalRows - 3 << colonSpace << decrease4 << endl <<
-                totalRows - 2 << colonSpace << decrease3 << endl <<
-                totalRows - 1 << colonSpace << decrease2 << endl <<
-                totalRows << colonSpace << decrease1 << endl <<
-                decrease0 << endl;
-                break;
-            case 7:
-                cout << increase1 << endl
-                << increase2 << endl <<
-                increase3 << endl <<
-                increase4 << endl <<
-                increase5 << endl <<
-                increase6 << endl <<
-                increase7 << endl <<
-                "8-15: " << around << endl <<
-                totalRows - 5 << colonSpace << decrease6 << endl <<
-                totalRows - 4 << colonSpace << decrease5 << endl <<
-                totalRows - 3 << colonSpace << decrease4 << endl <<
-                totalRows - 2 << colonSpace << decrease3 << endl <<
-                totalRows - 1 << colonSpace << decrease2 << endl <<
-                totalRows << colonSpace << decrease1 << endl <<
-                decrease0 << endl;
-                break;
-            case 8:
-                cout << increase1 << endl
-                << increase2 << endl <<
-                increase3 << endl <<
-                increase4 << endl <<
-                increase5 << endl <<
-                increase6 << endl <<
-                increase7 << endl <<
-                increase8 << endl <<
-                "8-15: " << around << endl <<
-                totalRows - 6 << colonSpace << decrease7 << endl <<
-                totalRows - 5 << colonSpace << decrease6 << endl <<
-                totalRows - 4 << colonSpace << decrease5 << endl <<
-                totalRows - 3 << colonSpace << decrease4 << endl <<
-                totalRows - 2 << colonSpace << decrease3 << endl <<
-                totalRows - 1 << colonSpace << decrease2 << endl <<
-                totalRows << colonSpace << decrease1 << endl <<
-                decrease0 << endl;
-                break;
-            default:
-                cout << "Sorry, this has not been programmed yet." << endl;
+        cout << rowsIncrease + 1 << "-" << rowsIncrease + rowsAround << colonSpace << around << endl;
+        
+        if (rowsIncrease >= 8) {
+            cout << rowsIncrease + rowsAround + decreaseCounter << colonSpace << decrease7 << endl;
+            decreaseCounter += 1;
         }
+        if (rowsIncrease >= 7) {
+            cout << rowsIncrease + rowsAround + decreaseCounter << colonSpace << decrease6 << endl;
+            decreaseCounter += 1;
+        }
+        if (rowsIncrease >= 6) {
+            cout << rowsIncrease + rowsAround + decreaseCounter << colonSpace << decrease5 << endl;
+            decreaseCounter += 1;
+        }
+        if (rowsIncrease >= 5) {
+            cout << rowsIncrease + rowsAround + decreaseCounter << colonSpace << decrease4 << endl;
+            decreaseCounter += 1;
+        }
+        if (rowsIncrease >= 4) {
+            cout << rowsIncrease + rowsAround + decreaseCounter << colonSpace << decrease3 << endl;
+            decreaseCounter += 1;
+        }
+        if (rowsIncrease >= 3) {
+            cout << rowsIncrease + rowsAround + decreaseCounter << colonSpace << decrease2 << endl;
+            decreaseCounter += 1;
+        }
+        if (rowsIncrease >= 2) {
+            cout << rowsIncrease + rowsAround + decreaseCounter << colonSpace << decrease1 << endl;
+            decreaseCounter += 1;
+        }
+        cout << endl << "Press 'e' to exit     |     Press any other character to reset" << endl;
+        cin >> input;
     }
-    else
-        cout << "Please choose a number that is divisible by 6." << endl;
+    while (input != 'e' || input != 'e');
+    cout << "Thank you for using the crochet sphere pattern printer. :)" << endl;
 }
