@@ -109,6 +109,6 @@ int main() {
         cout << endl << "Press 'e' to exit     |     Press any other character to reset" << endl;
         cin >> input;
     }
-    while (input != 'e' || input != 'e');
+    while (input != 'e' || input != 'E');
     cout << "Thank you for using the crochet sphere pattern printer. :)" << endl;
 }
